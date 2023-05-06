@@ -52,7 +52,9 @@ async def upload_files(request: Request, files: List[UploadFile] = File(...)):
         file_path = f"uploads/{file.filename}"
         with open(file_path, "wb") as buffer:
             buffer.write(await file.read())
-    return RedirectResponse(url="/convert")
+
+    convert_url = request.url_for("convert_files")
+    return RedirectResponse(url=convert_url)
 
 
 @app.post("/convert/")
