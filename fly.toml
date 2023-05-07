@@ -10,16 +10,7 @@ processes = []
   auto_rollback = true
   
 [build]
-
-  [[build.buildpacks]]
-  uri = "https://github.com/heroku/heroku-buildpack-apt.git"
-
-  [[build.buildpacks]]
-  uri = "https://github.com/heroku/heroku-buildpack-python.git"
-
-  [build.buildpacks.environment]
-  APT_GET_INSTALL = "ffmpeg"
-  PYTHON_RUNTIME = "python3.11"
+  image = "Dockerfile"
 
 [[services]]
   http_checks = []
