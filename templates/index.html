@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload and Conversion</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <h1>Upload and Conversion</h1>
+    <form action="/upload/" method="post" enctype="multipart/form-data">
+        <input type="file" name="files" multiple>
+        <button type="submit">Upload</button>
+    </form>
+    
+    <h2>Converted Files</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Original Filename</th>
+                <th>Converted Filename</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file_info in file_info_list %}
+            <tr>
+                <td>{{ file_info.original_filename }}</td>
+                <td>{{ file_info.converted_filename }}</td>
+                <td><a href="{{ url_for('download_file', file_name=file_info.converted_filename) }}">Download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="/convert/" method="post">
+        <button type="submit">Convert Files</button>
+    </form>
+</body>
+</html>
