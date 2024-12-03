@@ -6,6 +6,7 @@ from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi import HTTPException
 from pydub import AudioSegment
 
 app = FastAPI()
@@ -47,6 +48,9 @@ async def read_root(request: Request):
 
 @app.post("/upload/")
 async def upload_files(request: Request, files: List[UploadFile] = File(...)):
+    if not files:
+        raise HTTPException(status_code=400, detail="Nenhum arquivo foi selecionado para upload.")
+
     for file in files:
         logger.info(f"File uploading: {file.filename}")
         file_path = f"uploads/{file.filename}"
