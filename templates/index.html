@@ -11,7 +11,7 @@
 <body>
     <h1>Upload and Conversion</h1>
     <!-- Upload Form -->
-    <form action="{{ url_for('upload_files') }}" method="post" enctype="multipart/form-data">
+    <form id="upload-form" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <input type="file" name="files" multiple>
         <button type="submit">Upload</button>
     </form>
@@ -40,5 +40,18 @@
     <form action="{{ url_for('convert_files') }}" method="post">
         <button type="submit">Convert Files</button>
     </form>
+
+    <script>
+        document.getElementById('upload-form').action = window.location.origin + '/upload/';
+
+        function validateForm() {
+            const files = document.querySelector('input[type="file"]').files;
+            if (files.length === 0) {
+                alert("Por favor, selecione pelo menos um arquivo para upload.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>
