@@ -19,12 +19,12 @@ logging.basicConfig(
 )
 
 
-def convert_to_opus(file_path: str) -> str:
+def convert_to_ogg(file_path: str) -> str:
     audio = AudioSegment.from_file(file_path, format="mp3")
-    opus_filename = f"converted_{os.path.splitext(os.path.basename(file_path))[0]}.opus"
-    opus_path = f"uploads/{opus_filename}"
-    audio.export(opus_path, format="opus")
-    return opus_filename
+    ogg_filename = f"converted_{os.path.splitext(os.path.basename(file_path))[0]}.ogg"
+    ogg_path = f"uploads/{ogg_filename}"
+    audio.export(ogg_path, format="ogg")
+    return ogg_filename
 
 
 @app.get("/")
@@ -63,7 +63,7 @@ async def convert_files():
     for filename in files:
         if filename.endswith(".mp3"):
             file_path = f"uploads/{filename}"
-            converted_filename = convert_to_opus(file_path)
+            converted_filename = convert_to_ogg(file_path)
             logger.info(f"File converted: {converted_filename}")
             os.remove(file_path)
     return RedirectResponse(url="/", status_code=301)
