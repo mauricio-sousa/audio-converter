@@ -9,6 +9,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi import HTTPException
 from pydub import AudioSegment
 
+if not os.path.exists("uploads"):
+    os.makedirs("uploads")
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
