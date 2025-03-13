@@ -9,6 +9,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi import HTTPException
 from pydub import AudioSegment
 
+if not os.path.exists("uploads"):
+    os.makedirs("uploads")
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -24,7 +27,7 @@ def convert_to_ogg(file_path: str) -> str:
     audio = AudioSegment.from_file(file_path, format="mp3")
     ogg_filename = f"converted_{os.path.splitext(os.path.basename(file_path))[0]}.ogg"
     ogg_path = f"uploads/{ogg_filename}"
-    audio.export(ogg_path, format="ogg")
+    audio.export(ogg_path, format="opus")
     return ogg_filename
 
 
